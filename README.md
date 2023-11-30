@@ -30,6 +30,11 @@ O sistema Freelaway foi criado com o intuito de ser uma plataforma centralizada 
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para mais detalhes.
 
+## Imagens do sistema
+<img src="/assets/img1.jpeg">
+<img src="/assets/img2.jpeg">
+<img src="/assets/img3.jpeg">
+<img src="/assets/img4.jpeg">
 ---
 
 Desenvolvido por Eliel Cesar.
