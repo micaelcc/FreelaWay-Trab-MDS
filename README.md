@@ -35,6 +35,8 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](L
   <img src="/assets/img1.jpeg" width="350" title="Historico">
   <img src="/assets/img2.jpeg" width="350" title="Jobs">
   <img src="/assets/img3.jpeg" width="350" title="Modal Job">
+</p>
+<p align="right">
   <img src="/assets/img4.jpeg" width="350" title="Tela de login">
 </p>
 
