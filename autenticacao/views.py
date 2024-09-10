@@ -30,6 +30,7 @@ def login(request):
 
 def cadastro(request):
     TEMPLATE_STR = 'cadastro.html'
+    REDIRECT_STR = '/auth/cadastro'
 
     if request.method == 'GET':
         if request.user.is_authenticated:
@@ -67,13 +68,13 @@ def cadastro(request):
             user.save()
 
             messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
-            return redirect('/auth/cadastro')
+            return redirect(REDIRECT_STR)
 
         except:
             messages.add_message(request, constants.ERROR, 'Erro ao criar o usuário')
-            return redirect('/auth/cadastro')
+            return redirect(REDIRECT_STR)
 
-    return render('/auth/cadastro')
+    return render(REDIRECT_STR)
 
 
 def sair(request):
