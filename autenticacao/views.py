@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.models import User
 from django.contrib import auth
-
+from autenticacao.create_user_error import CreateUserError
 # Create your views here.
 def login(request):
     if request.method == 'GET':
@@ -70,8 +70,8 @@ def cadastro(request):
             messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
             return redirect(REDIRECT_STR)
 
-        except:
-            messages.add_message(request, constants.ERROR, 'Erro ao criar o usuário')
+        except CreateUserError() as e:
+            messages.add_message(request, constants.ERROR, str(e))
             return redirect(REDIRECT_STR)
 
     return render(REDIRECT_STR)
