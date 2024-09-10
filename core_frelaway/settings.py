@@ -1,12 +1,14 @@
 from pathlib import Path
 from django.contrib.messages import constants
+from decouple import config
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-cpzz+_yc8wc&60hk%urt453*5lw4bpc#rbb^wc$zu=+**4*kr5'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
