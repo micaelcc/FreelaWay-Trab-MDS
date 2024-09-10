@@ -44,7 +44,7 @@ def cadastro(request):
             messages.add_message(request, constants.WARNING, 'Nome de usuário deve ter no mínimo 3 letras')
             return render(request,'cadastro.html')
 
-        elif not senha == confirmar_senha:
+        elif senha != confirmar_senha:
             messages.add_message(request, constants.WARNING, 'As senhas digitadas não são iguais')
             return render(request,'cadastro.html')
         
