@@ -29,11 +29,13 @@ def login(request):
 
 
 def cadastro(request):
+    TEMPLATE_STR = 'cadastro.html'
+
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('/plataforma')
         else:
-            return render(request, 'cadastro.html')
+            return render(request, TEMPLATE_STR)
     
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -42,22 +44,22 @@ def cadastro(request):
 
         if len(username.strip()) < 3:
             messages.add_message(request, constants.WARNING, 'Nome de usuário deve ter no mínimo 3 letras')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
 
         elif senha != confirmar_senha:
             messages.add_message(request, constants.WARNING, 'As senhas digitadas não são iguais')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
         
         elif len(senha.strip()) < 4:
             messages.add_message(request, constants.WARNING, 'A Senha deve ter no mínimo 4 caracteres')
-            return render(request, 'cadastro.html')
+            return render(request, TEMPLATE_STR)
         
         # verifica se o usuario já existe no banco de dados
         user = User.objects.filter(username = username)
 
         if user.exists():
             messages.add_message(request, constants.WARNING, 'Este usuário já existe no sistema')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
         
         # cadastra o usuário no banco
         try:
