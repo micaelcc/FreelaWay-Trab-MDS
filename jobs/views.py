@@ -46,6 +46,7 @@ def aceitar_job(request, id):
 
 @login_required(login_url='/auth/logar')
 def perfil(request):
+    REDIRECT_STR = '/jobs/perfil'
     if request.method == 'GET':
         jobs = Jobs.objects.filter(profissional=request.user)
         return render(request, 'perfil.html', {'jobs':jobs})
@@ -61,14 +62,14 @@ def perfil(request):
 
         if usuario.exists():
             messages.add_message(request, constants.WARNING, 'Já existe um usuário com esse Username')
-            return redirect('/jobs/perfil')
+            return redirect(REDIRECT_STR)
 
         # varifica se já existe um usuário com esse e-mail que não seja eu 
         usuario = User.objects.filter(email=email).exclude(id=request.user.id)
 
         if usuario.exists():
             messages.add_message(request, constants.WARNING, 'Já existe um usuário com esse e-mail')
-            return redirect('/jobs/perfil')
+            return redirect(REDIRECT_STR)
 
         # atualiza os dados do usuário 
         request.user.username = username
@@ -77,7 +78,7 @@ def perfil(request):
         request.user.last_name = ultimo_nome
         request.user.save()
         messages.add_message(request, constants.SUCCESS, 'Dados alterados com sucesso!')
-        return redirect('/jobs/perfil')
+        return redirect(REDIRECT_STR)
     
 
 @login_required(login_url='/auth/logar')

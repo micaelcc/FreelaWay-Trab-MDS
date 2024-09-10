@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.models import User
 from django.contrib import auth
-
+from autenticacao.create_user_error import CreateUserError
 # Create your views here.
 def login(request):
     if request.method == 'GET':
@@ -29,11 +29,14 @@ def login(request):
 
 
 def cadastro(request):
+    TEMPLATE_STR = 'cadastro.html'
+    REDIRECT_STR = '/auth/cadastro'
+
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('/plataforma')
         else:
-            return render(request, 'cadastro.html')
+            return render(request, TEMPLATE_STR)
     
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -42,22 +45,22 @@ def cadastro(request):
 
         if len(username.strip()) < 3:
             messages.add_message(request, constants.WARNING, 'Nome de usuário deve ter no mínimo 3 letras')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
 
-        elif not senha == confirmar_senha:
+        elif senha != confirmar_senha:
             messages.add_message(request, constants.WARNING, 'As senhas digitadas não são iguais')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
         
         elif len(senha.strip()) < 4:
             messages.add_message(request, constants.WARNING, 'A Senha deve ter no mínimo 4 caracteres')
-            return render(request, 'cadastro.html')
+            return render(request, TEMPLATE_STR)
         
         # verifica se o usuario já existe no banco de dados
         user = User.objects.filter(username = username)
 
         if user.exists():
             messages.add_message(request, constants.WARNING, 'Este usuário já existe no sistema')
-            return render(request,'cadastro.html')
+            return render(request,TEMPLATE_STR)
         
         # cadastra o usuário no banco
         try:
@@ -65,13 +68,13 @@ def cadastro(request):
             user.save()
 
             messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
-            return redirect('/auth/cadastro')
+            return redirect(REDIRECT_STR)
 
-        except:
-            messages.add_message(request, constants.ERROR, 'Erro ao criar o usuário')
-            return redirect('/auth/cadastro')
+        except CreateUserError() as e:
+            messages.add_message(request, constants.ERROR, str(e))
+            return redirect(REDIRECT_STR)
 
-    return render('/auth/cadastro')
+    return render(REDIRECT_STR)
 
 
 def sair(request):
